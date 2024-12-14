@@ -1,0 +1,45 @@
+{% extends "base.html" %} {% block content %}
+
+
+<section
+  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6"
+>
+  {% for product in products %}
+  <div class="bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition-all">
+    <!-- Exibe a primeira imagem de alta resolução -->
+    <img src="{{ product.thumbnail }}" alt="{{ product.title }}" />
+    <h2 class="text-lg font-semibold mt-2">{{ product.title }}</h2>
+    <p class="text-gray-500">Preço: R$ {{ product.price }}</p>
+    <a
+      href="{{ url_for('product_bp.product_details', product_id=product.id) }}"
+      class="text-blue-500 hover:text-blue-700 mt-2 inline-block"
+      >Ver produto</a
+    >
+    </div>
+    {% endfor %}
+</section>
+
+<div class="flex justify-center space-x-4 mt-6">
+    {% if page > 0 %}
+  <a
+    href="{{ url_for('product_bp.index', page=page-1) }}"
+    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+    >Página Anterior</a
+  >
+  {% endif %} {% for page_num in page_links %}
+  <a
+    href="{{ url_for('product_bp.index', page=page_num) }}"
+    class="px-4 py-2 rounded border {{ 'bg-blue-500 text-white' if page == page_num else 'bg-white text-blue-500 border-blue-500' }} hover:bg-blue-200"
+  >
+            {{ page_num + 1 }}
+        </a>
+  {% endfor %} {% if page < total_pages - 1 %}
+  <a
+    href="{{ url_for('product_bp.index', page=page+1) }}"
+    class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-700"
+    >Próxima Página</a
+  >
+    {% endif %}
+</div>
+
+{% endblock %}
