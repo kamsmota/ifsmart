@@ -1,7 +1,6 @@
-from flask import Blueprint, request, render_template, jsonify
-from models.adm import listar_todos_pontos, cadastrar_colaborador, atualizar_salario
-from models.colaboradores import ponto
-from models.adm import *
+from flask import Blueprint, render_template
+from models.adm import atualizar_salario, cadastrar_colaborador
+from models.ponto import *
 
 admController = Blueprint("adm", __name__)
 
@@ -13,7 +12,7 @@ def mostrar_homepage_adm():
 # listar todos os pontos dos colaboradores
 @admController.route('/pontos', methods=['GET'])
 def listar_pontos():
-    return render_template("admin_painel.html", pontos_registro=ponto_registro)
+    return render_template("admin_painel.html", pontos_registro=PontoRegistro)
 
 
 # cadastrar um novo colaborador
