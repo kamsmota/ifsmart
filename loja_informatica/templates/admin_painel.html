@@ -6,10 +6,10 @@
     <title>Painel de Administração | IFSmart</title>
 </head>
 <header>
-    <a href="home.html">IFSmart</a>
+    <a href="{{ url_for('product_bp.index') }}">IFSmart</a>
     <a href="edit.html">Editar Produtos</a>
-    <a href="{{ url_for('adm_controller.listar_pontos') }}">Verificação de Pontos</a>
-    <a href="cadastro.html">Cadastrar</a>
+    <a href="{{ url_for('adm.listar_pontos') }}">Verificação de Pontos</a>
+    <a href="{{ url_for('auth.signup') }}" class="text-blue-500">Cadastrar</a>
     <a href="{{ url_for('item_controller.index') }}">Ver todas as tarefas</a>
     <a href="{{ url_for('auth.logout') }}" class="mr-4">Sair</a>
 </header>
