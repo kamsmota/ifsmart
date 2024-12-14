@@ -35,39 +35,7 @@
         </form>
 
         <h3>Pontos Registrados</h3>
-        <div id="pontosRegistros"></div>
-
-        <script>
-            document.getElementById('consultarPontosForm').addEventListener('submit', function(event) {
-                event.preventDefault();
-                
-                const colaboradorId = document.getElementById('colaborador_id').value;
-                const pontosDiv = document.getElementById('pontosRegistros');
-                
-                fetch(`/obter_pontos/${colaboradorId}`)
-                    .then(response => response.json())
-                    .then(data => {
-                        pontosDiv.innerHTML = "";  // Limpa a área de pontos
-                        if (data.message) {
-                            pontosDiv.innerHTML = `<p>${data.message}</p>`;
-                        } else {
-                            data.forEach(registro => {
-                                pontosDiv.innerHTML += `
-                                    <div>
-                                        <p><strong>Dia:</strong> ${registro.dia}</p>
-                                        <p><strong>Entrada Manhã:</strong> ${registro.entrada_manha || "Não registrado"}</p>
-                                        <p><strong>Saída Manhã:</strong> ${registro.saida_manha || "Não registrado"}</p>
-                                        <p><strong>Entrada Tarde:</strong> ${registro.entrada_tarde || "Não registrado"}</p>
-                                        <p><strong>Saída Tarde:</strong> ${registro.saida_tarde || "Não registrado"}</p>
-                                    </div>
-                                    <hr>
-                                `;
-                            });
-                        }
-                    })
-                    .catch(error => console.error("Erro ao obter pontos:", error));
-            });
-        </script>
+        <div id="pontosRegistros">
     </div>
 </body>
 </html>
