@@ -4,18 +4,17 @@ from models.colaboradores import ponto
 
 admController = Blueprint("adm", __name__)
 
-# Rota para a página inicial de administradores
+# rota p página inicial de administradores
 @admController.route('/')
 def mostrar_homepage_adm():
     return render_template("admin_painel.html")
 
-# Rota para listar todos os pontos dos colaboradores
+# listar todos os pontos dos colaboradores
 @admController.route('/pontos', methods=['GET'])
 def listar_pontos():
-    # Presumindo que listar_todos_pontos não precise de 'ponto' como argumento
     return listar_todos_pontos()
 
-# Rota para cadastrar um novo colaborador
+# cadastro de um novo colaborador
 @admController.route('/colaboradores', methods=['POST'])
 def adicionar_colaborador():
     data = request.json
@@ -30,7 +29,7 @@ def adicionar_colaborador():
 
     return cadastrar_colaborador(nome, data_nasci, user, senha, salario)
 
-# Rota para atualizar salário ou status de férias de um colaborador
+# att salário de um colaborador
 @admController.route('/colaboradores/<int:colaborador_id>', methods=['PUT'])
 def atualizar_dados_colaborador(colaborador_id):
     data = request.json
