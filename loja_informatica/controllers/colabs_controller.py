@@ -1,5 +1,7 @@
 from flask import *
 from models.colaboradores import *
+from repository.colabRepository import get_ponto, ponto
+
 
 colabsController = Blueprint("colaboradores", __name__)
 
@@ -9,7 +11,7 @@ def mostrar_homepage_colabs():
     return render_template("colabs_painel.html")
 
 #registro de pontos
-@colabsController.route('/registrar_ponto', methods=['POST'])
+@colabsController.route('/espelhodeponto', methods=['POST'])
 def registrar_ponto():
     return ponto()
 
@@ -17,5 +19,4 @@ def registrar_ponto():
 @colabsController.route('/obter_pontos/<int:colaborador_id>', methods=['GET'])
 def obter_ponto(colaborador_id):
     return get_ponto(colaborador_id)
-
 
