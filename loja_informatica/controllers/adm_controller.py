@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from models.adm import atualizar_salario, cadastrar_colaborador
+from repository.admRepository import atualizar_salario, cadastrar_colaborador
 from models.ponto import *
 
 admController = Blueprint("adm", __name__)
