@@ -4,25 +4,25 @@ from config import db
 class AdministradoresDAO:
     @staticmethod
     def get_adm(id):
-        return adms.query.get(id)
+        return Administradores.query.get(id)
 
     @staticmethod
     def get_all_adms():
-        return adms.query.all()
+        return Administradores.query.all()
 
     @staticmethod
-    def add_adm(name, email):
-        adm = adm(name=name, email=email)
+    def add_adm(nome, email):
+        adm = adm(nome=nome, email=email)
         db.session.add(adm)
         db.session.commit()
         return adm
 
     @staticmethod
-    def att_adm(id, name, email):
+    def att_adm(id, nome, user):
         adm = AdministradoresDAO.get_adm(id)
         if adm:
-            adm.name = name
-            adm.email = email
+            Administradores.nome = nome
+            Administradores.user = user
             db.session.commit()
         return adm
 
