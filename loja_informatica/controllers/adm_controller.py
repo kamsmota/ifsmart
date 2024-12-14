@@ -12,9 +12,10 @@ def mostrar_homepage_adm():
 # Rota para listar todos os pontos dos colaboradores
 @admController.route('/pontos', methods=['GET'])
 def listar_pontos():
-    return listar_todos_pontos(ponto)
+    # Presumindo que listar_todos_pontos não precise de 'ponto' como argumento
+    return listar_todos_pontos()
 
-# cadastrar um novo colaborador
+# Rota para cadastrar um novo colaborador
 @admController.route('/colaboradores', methods=['POST'])
 def adicionar_colaborador():
     data = request.json
@@ -29,13 +30,13 @@ def adicionar_colaborador():
 
     return cadastrar_colaborador(nome, data_nasci, user, senha, salario)
 
-# atualizar salário ou status de férias de um colaborador
+# Rota para atualizar salário ou status de férias de um colaborador
 @admController.route('/colaboradores/<int:colaborador_id>', methods=['PUT'])
 def atualizar_dados_colaborador(colaborador_id):
     data = request.json
     salario = data.get("salario")
 
     if salario is None:
-        return jsonify({"error": "Informe pelo menos um campo para atualizar (salário ou férias)."}), 400
+        return jsonify({"error": "Selecione o campo para atualização."}), 400
 
     return atualizar_salario_ferias(colaborador_id, salario=salario)
