@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colaboradores | IFSmart</title>
+</head>
+<header>
+    <a href="home.html">IFSmart</a>
+    <a href="edit.html">Editar Produtos</a>
+    <a href="espelhodeponto.html">Espelho de Ponto</a>
+    <a href="cadastro.html">Cadastrar</a>
+    <a href="{{ url_for('item_controller.index') }}">Ver todas as tarefas</a>
+    <a href="{{ url_for('auth.logout') }}" class="mr-4">Sair</a>
+</header>
+<body>
+    <h2>Bem-vindo ao Painel de Colaborador</h2>
+    <p>Olá, {{ session['username'] }}!</p>
+    <a href="{{ url_for('auth.logout') }}">Logout</a>
+</body>
+</html>

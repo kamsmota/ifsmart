@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verificação de Pontos | IFSmart</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Painel do Administrador</h1>
+
+        <h2>Lista de Pontos dos Colaboradores</h2>
+        
+        <div id="pontosRegistros">
+          {% if pontos_registro %}
+            <table border="1">
+              <thead>
+                <tr>
+                  <th>ID do Colaborador</th>
+                  <th>Dia</th>
+                  <th>Entrada Manhã</th>
+                  <th>Saída Manhã</th>
+                  <th>Entrada Tarde</th>
+                  <th>Saída Tarde</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for registro in pontos_registro %}
+                <tr>
+                  <td>{{ registro.colaborador_id }}</td>
+                  <td>{{ registro.dia }}</td>
+                  <td>{{ registro.entrada_manha or "Não registrado" }}</td>
+                  <td>{{ registro.saida_manha or "Não registrado" }}</td>
+                  <td>{{ registro.entrada_tarde or "Não registrado" }}</td>
+                  <td>{{ registro.saida_tarde or "Não registrado" }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p>Nenhum ponto registrado ainda.</p>
+          {% endif %}
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Ponto | IFSmart</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Registro de Ponto</h1>
+
+        <!-- formulario para registrar o ponto -->
+        <form id="formPonto">
+            <label for="colaborador_id">ID do Colaborador:</label>
+            <input type="number" id="colaborador_id" name="colaborador_id" required>
+            
+            <label for="periodo">Período:</label>
+            <select id="periodo" name="periodo" required>
+                <option value="entrada_manha">Entrada Manhã</option>
+                <option value="saida_manha">Saída Manhã</option>
+                <option value="entrada_tarde">Entrada Tarde</option>
+                <option value="saida_tarde">Saída Tarde</option>
+            </select>
+            
+            <button type="submit">Registrar</button>
+        </form>
+
+        <!-- mostra pontos registrados -->
+        <h2>Consultar Meus Pontos</h2>
+        <form id="consultarPontosForm">
+            <label for="colaborador_user">ID do Colaborador:</label>
+            <input type="number" id="colaborador_id" required>
+            <button type="submit">Consultar</button>
+        </form>
+
+        <h3>Pontos Registrados</h3>
+        <div id="pontosRegistros"></div>
+
+        <script>
+            document.getElementById('consultarPontosForm').addEventListener('submit', function(event) {
+                event.preventDefault();
+                
+                const colaboradorId = document.getElementById('colaborador_id').value;
+                const pontosDiv = document.getElementById('pontosRegistros');
+                
+                fetch(`/obter_pontos/${colaboradorId}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        pontosDiv.innerHTML = "";  // Limpa a área de pontos
+                        if (data.message) {
+                            pontosDiv.innerHTML = `<p>${data.message}</p>`;
+                        } else {
+                            data.forEach(registro => {
+                                pontosDiv.innerHTML += `
+                                    <div>
+                                        <p><strong>Dia:</strong> ${registro.dia}</p>
+                                        <p><strong>Entrada Manhã:</strong> ${registro.entrada_manha || "Não registrado"}</p>
+                                        <p><strong>Saída Manhã:</strong> ${registro.saida_manha || "Não registrado"}</p>
+                                        <p><strong>Entrada Tarde:</strong> ${registro.entrada_tarde || "Não registrado"}</p>
+                                        <p><strong>Saída Tarde:</strong> ${registro.saida_tarde || "Não registrado"}</p>
+                                    </div>
+                                    <hr>
+                                `;
+                            });
+                        }
+                    })
+                    .catch(error => console.error("Erro ao obter pontos:", error));
+            });
+        </script>
+    </div>
+</body>
+</html>
+
+        <div id="pontosRegistros"></div>
+    </div>
+
+    <script>
+        // enviar o registro de ponto para a API
+        document.getElementById("formPonto").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const colaboradorId = document.getElementById("colaborador_id").value;
+            const periodo = document.getElementById("periodo").value;
+
+            fetch("/registrar_ponto", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    colaborador_id: colaboradorId,
+                    periodo: periodo
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert("Ponto registrado com sucesso!");
+                    atualizarPontos();
+                }
+            })
+            .catch(error => console.error("Erro:", error));
+        });
+
+        // atualizar a lista de pontos registrados
+        function atualizarPontos() {
+            fetch("/obter_pontos")
+            .then(response => response.json())
+            .then(data => {
+                const pontosDiv = document.getElementById("pontosRegistros");
+                pontosDiv.innerHTML = "";
+
+                data.forEach(registro => {
+                    pontosDiv.innerHTML += `
+                        <div>
+                            <p><strong>ID Colaborador:</strong> ${registro.colaborador_id}</p>
+                            <p><strong>Dia:</strong> ${registro.dia}</p>
+                            <p><strong>Entrada Manhã:</strong> ${registro.entrada_manha || "Não registrado"}</p>
+                            <p><strong>Saída Manhã:</strong> ${registro.saida_manha || "Não registrado"}</p>
+                            <p><strong>Entrada Tarde:</strong> ${registro.entrada_tarde || "Não registrado"}</p>
+                            <p><strong>Saída Tarde:</strong> ${registro.saida_tarde || "Não registrado"}</p>
+                        </div>
+                        <hr>
+                    `;
+                });
+            })
+            .catch(error => console.error("Erro ao obter pontos:", error));
+        }
+
+        // att a lista de pontos ao carregar a pagina
+        atualizarPontos();
+    </script>
+</body>
+</html>
