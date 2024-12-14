@@ -4,9 +4,12 @@ from config import db
 from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_user, logout_user, login_required, current_user
 from controllers.cart_controller import load_cart_from_db , save_cart_to_db
-
+from repository.user_repository import UserRepository
+from dao.user_dao import UserDAO
 
 auth_bp = Blueprint('auth', __name__)
+
+
 
 # Rota para cadastro de usuários
 @auth_bp.route('/signup', methods=["GET", "POST"])
@@ -47,16 +50,15 @@ def login():
         user = User.query.filter_by(username=username).first()
         if user and check_password_hash(user.password, password):
             # Realiza o login do usuário
-            login_user(user)
             load_cart_from_db()
-            flash('Login realizado com sucesso!', 'success')
+            #flash('Login realizado com sucesso!', 'success')
 
             # Verifica se o usuário é admin
             if user.role == 'admin':  # Verifica o papel de administrador
-                return redirect(url_for('admin_painel.html'))  # Redireciona para a página de itens se for admin
-            if user.role == 'colaborador':
-                return redirect(url_for("colabs_painel.html")) # redireciona p painel de funcionarios se for colaborador
+                login_user(user, remember=True)
+                return redirect(url_for('item_controller.index'))  # Redireciona para a página de itens se for admin
             else:
+                login_user(user, remember=True)
                 return redirect(url_for('product_bp.index'))  # Redireciona para a página de produtos se não for admin
             
         else:

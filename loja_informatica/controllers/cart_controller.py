@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, request, redirect, url_for, flash
 import requests
+from repository.cart_repository import CartRepository
+from flask_login import login_required
 from flask_login import current_user
 from models.cart import Cart
 from models.cart_item import CartItem
@@ -8,15 +10,12 @@ from config import db
 
 cart_bp = Blueprint('cart_bp', __name__)
 
-MERCADO_LIVRE_API_BASE = "https://api.mercadolivre.com"
+MERCADO_LIVRE_API_BASE = "https://api.mercadolibre.com"
 
 # Função para adicionar produto ao carrinho
 @cart_bp.route('/add_to_cart/<product_id>')
+@login_required
 def add_to_cart(product_id):
-    if 'user_id' not in session:
-        flash("Você precisa estar logado para adicionar produtos ao carrinho.", "error")
-        return redirect(url_for('auth.login'))
-
     # Verifica se o produto já existe no carrinho
     cart = session.get('cart', [])
 
@@ -53,11 +52,9 @@ def add_to_cart(product_id):
 
 # Função para exibir o carrinho de compras
 @cart_bp.route('/cart')
+@login_required
 def view_cart():
-    if 'user_id' not in session:
-        flash("Você precisa estar logado para ver seu carrinho.", "error")
-        return redirect(url_for('auth.login'))
-
+    
     # Obtém o carrinho da sessão
     cart = session.get('cart', [])
 
@@ -69,9 +66,6 @@ def view_cart():
 # Função para remover um produto do carrinho
 @cart_bp.route('/remove_from_cart/<product_id>')
 def remove_from_cart(product_id):
-    if 'user_id' not in session:
-        flash("Você precisa estar logado para remover produtos do carrinho.", "error")
-        return redirect(url_for('auth.login'))
 
     # Obtém o carrinho da sessão
     cart = session.get('cart', [])
@@ -84,10 +78,8 @@ def remove_from_cart(product_id):
 
 # Função para aumentar a quantidade de um produto no carrinho
 @cart_bp.route('/increase_quantity/<product_id>')
+@login_required
 def increase_quantity(product_id):
-    if 'user_id' not in session:
-        flash("Você precisa estar logado para alterar a quantidade.", "error")
-        return redirect(url_for('auth.login'))
 
     cart = session.get('cart', [])
     product = next((item for item in cart if item['id'] == product_id), None)
@@ -103,10 +95,8 @@ def increase_quantity(product_id):
 
 # Função para diminuir a quantidade do produto no carrinho
 @cart_bp.route('/decrease_quantity/<product_id>')
+@login_required
 def decrease_quantity(product_id):
-    if 'user_id' not in session:
-        flash("Você precisa estar logado para alterar a quantidade.", "error")
-        return redirect(url_for('auth.login'))
 
     cart = session.get('cart', [])
     product = next((item for item in cart if item['id'] == product_id), None)
