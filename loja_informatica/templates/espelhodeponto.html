@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Ponto | IFSmart</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
     <div class="container">
@@ -35,71 +35,7 @@
         </form>
 
         <h3>Pontos Registrados</h3>
-        <div id="pontosRegistros">
-    </div>
-</body>
-</html>
+        
 
-        <div id="pontosRegistros"></div>
-    </div>
-
-    <script>
-        // enviar o registro de ponto para a API
-        document.getElementById("formPonto").addEventListener("submit", function(event) {
-            event.preventDefault();
-
-            const colaboradorId = document.getElementById("colaborador_id").value;
-            const periodo = document.getElementById("periodo").value;
-
-            fetch("/registrar_ponto", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    colaborador_id: colaboradorId,
-                    periodo: periodo
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.error) {
-                    alert(data.error);
-                } else {
-                    alert("Ponto registrado com sucesso!");
-                    atualizarPontos();
-                }
-            })
-            .catch(error => console.error("Erro:", error));
-        });
-
-        // atualizar a lista de pontos registrados
-        function atualizarPontos() {
-            fetch("/obter_pontos")
-            .then(response => response.json())
-            .then(data => {
-                const pontosDiv = document.getElementById("pontosRegistros");
-                pontosDiv.innerHTML = "";
-
-                data.forEach(registro => {
-                    pontosDiv.innerHTML += `
-                        <div>
-                            <p><strong>ID Colaborador:</strong> ${registro.colaborador_id}</p>
-                            <p><strong>Dia:</strong> ${registro.dia}</p>
-                            <p><strong>Entrada Manhã:</strong> ${registro.entrada_manha || "Não registrado"}</p>
-                            <p><strong>Saída Manhã:</strong> ${registro.saida_manha || "Não registrado"}</p>
-                            <p><strong>Entrada Tarde:</strong> ${registro.entrada_tarde || "Não registrado"}</p>
-                            <p><strong>Saída Tarde:</strong> ${registro.saida_tarde || "Não registrado"}</p>
-                        </div>
-                        <hr>
-                    `;
-                });
-            })
-            .catch(error => console.error("Erro ao obter pontos:", error));
-        }
-
-        // att a lista de pontos ao carregar a pagina
-        atualizarPontos();
-    </script>
 </body>
 </html>
