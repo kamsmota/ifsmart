@@ -1,4 +1,6 @@
 from dao.admDAO import AdministradoresDAO
+from config import db
+from flask import *
 
 class AdministradoresRepository:
     def __init__(self) -> None:
@@ -7,14 +9,11 @@ class AdministradoresRepository:
     def get_all_adms(self):
         return self.AdmsDao.get_all_adms()
 
-    def get_adms_by_id(self, adm_id):
-        return self.AdmsDao.get_adms_by_id(adm_id)
-
     def create_adm(self, name, email):
-        return self.AdmsDao.create_adms(name, email)
+        return self.AdmsDao.add_adm(name, email)
 
     def update_adm(self, adm_id, name, email):
-        return self.AdmsDao.update_adms(adm_id, name, email)
+        return self.AdmsDao.att_adm(adm_id, name, email)
 
     def delete_adm(self, adm_id):
-        return self.AdmsDao.delete_adms(adm_id)
+        return self.AdmsDao.del_adm(adm_id)
