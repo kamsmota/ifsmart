@@ -4,13 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verificação de Pontos | IFSmart</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <div class="container">
-        <h1>Painel do Administrador</h1>
 
+<body>
+    <header>
+        <a href="home.html">IFSmart</a>
+        <a href="edit.html">Editar Produtos</a>
+        <a href="cadastro.html">Cadastrar</a>
+        <a href="{{ url_for('item_controller.index') }}">Ver todas as tarefas</a>
+        <a href="{{ url_for('auth.logout') }}" class="mr-4">Sair</a>
+
+    </header>
+    <div class="container">
         <h2>Lista de Pontos dos Colaboradores</h2>
-        
         <div id="pontosRegistros">
           {% if pontos_registro %}
             <table border="1">
