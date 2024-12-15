@@ -1,13 +1,14 @@
 from config import *
 class Item(db.Model):
     __tablename__ = 'items' 
-
-    
     id = db.Column(db.Integer, primary_key=True)
     campo1 = db.Column(db.String(100), nullable=False)
-    campo2 = db.Column(db.String(100), nullable=False)
-    campo3 = db.Column(db.String(100), nullable=False)
-    campo4 = db.Column(db.String(100), nullable=False)
+    campo2 = db.Column(db.Text, nullable=False)
+    campo3 = db.Column(db.Date, nullable=False)
+    campo4 = db.Column(db.String(20), nullable=False)
+ 
+   
+
 
     def __init__(self, campo1, campo2, campo3, campo4):
         self.campo1 = campo1
