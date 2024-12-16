@@ -1,8 +1,6 @@
-from .adm import * #nome do arquivo 
-from .cart import *
-from .cart_item import *
-from .colaboradores import *
-from .item import *
-from .ponto import *
-from .product import *
-from .user import *
+from .admDAO import * #nome do arquivo 
+from .cart_dao import *
+from .cart_item_dao import *
+from .colabDAO import *
+from .item_dao import *
+from .user_dao import *
