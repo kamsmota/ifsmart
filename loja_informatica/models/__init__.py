@@ -1,6 +1,8 @@
-from .adm_controller import * #nome do arquivo 
-from .auth_controller import *
-from .carrinho_controlador import *
-from .colabs_controller.py import *
-from .item_controller.py import *
-from .produto_controlador.py import *
+from .adm import * #nome do arquivo 
+from .cart import *
+from .cart_item import *
+from .colaboradores import *
+from .item import *
+from .ponto import *
+from .product import *
+from .user import *
